@@ -1,0 +1,11 @@
+.git/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.json
+deploy_*.py
+test*
+project-*.json
+.env

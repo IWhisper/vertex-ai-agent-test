@@ -1,0 +1,6 @@
+google-cloud-aiplatform[agent_engines,reasoningengine,adk]>=1.141.0
+feedparser>=6.0.11
+requests>=2.31.0
+google-adk
+yfinance>=1.2.0
+python-dotenv>=1.2.2
