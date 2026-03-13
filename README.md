@@ -7,9 +7,10 @@ This project is a Multi-Agent system built with **Google ADK (Agent Development 
 ```
 vertex-ai-agent/
 ├── orchestrator_agent/
-│   ├── agent.py          # Root Agent: defines OrchestratorApp (AdkApp subclass)
+│   ├── agent.py          # Root Agent: defines app (AdkApp instance)
+│   ├── agent_engine_app.py # [NEW] Standardized deployment app entrypoint
 │   └── instructions.py   # Orchestrator routing instructions
-├── sub_agents/
+├── sub_agents/           # Financial and News specialized agents
 │   ├── rss_agent/
 │   │   ├── agent.py        # RSS summarizer Agent
 │   │   ├── instructions.py # RSS Agent instructions (includes default URL)
@@ -18,7 +19,13 @@ vertex-ai-agent/
 │       ├── agent.py        # Market analyst Agent
 │       ├── instructions.py # Market instructions (with dynamic date injection)
 │       └── tools.py        # fetch_major_indices / fetch_top_tech_stocks
-├── deploy_from_source.py   # Deployment script
+├── deployment/           # [NEW] Terraform & Cloud Build infrastructure
+├── tests/                # [NEW] Unit, Integration, Eval, and Load tests
+├── notebooks/            # [NEW] Evaluation and testing notebooks
+├── Makefile              # [NEW] dev/ops shortcut commands
+├── pyproject.toml        # [NEW] Project metadata & dependencies
+├── deploy_from_github.py
+├── deploy_from_source.py
 ├── test_local.py           # Local testing (InMemoryRunner)
 ├── test_deployed.py        # Cloud testing (stream / sync modes)
 └── requirements.txt
@@ -246,6 +253,32 @@ GIT_REPOSITORY_LINK=projects/YOUR_PROJECT/locations/YOUR_LOCATION/connections/YO
 ```bash
 python deploy_from_github.py
 ```
+
+---
+
+## Production Enhancement (Agent Starter Pack)
+
+To transform this exploration project into a production-ready system, we used the `agent-starter-pack` utility.
+
+### The Enhancement Process
+1. **Command**: `uvx agent-starter-pack enhance`
+2. **Base Template**: `adk Simple ReAct agent` (Option 1)
+3. **Deployment Target**: `agent_engine` (Vertex AI)
+4. **CI/CD Runner**: `google_cloud_build` (GCP Native)
+5. **Region**: `europe-west1`
+
+### What was Added?
+*   **Infrastructure as Code**: Full Terraform setup in `deployment/terraform/` for IAM, Logging, and BigQuery telemetry.
+*   **Standardized Workflow**: A `Makefile` for one-command operations (`make install`, `make playground`, `make deploy`).
+*   **Observability**: Integrated telemetry in `orchestrator_agent/app_utils/` for tracking agent performance.
+*   **Evaluation Suite**: Automated "LLM-as-a-judge" evaluation in `tests/eval/`.
+
+### New Recommended Workflow
+Instead of running Python scripts directly, you can now use the standardized `make` commands:
+*   `make install`: Set up the local environment.
+*   `make playground`: Start an interactive terminal to talk to your agent.
+*   `make test`: Run unit and integration tests.
+*   `make eval`: Run the evaluation set to benchmark performance.
 
 ---
 
