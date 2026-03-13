@@ -15,6 +15,9 @@ orchestrator_agent = Agent(
     sub_agents=[rss_agent, market_agent]
 )
 
+# Standard variable name expected by agent-starter-pack and deployment tools
+root_agent = orchestrator_agent
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # ABOUT AdkApp AND ITS DEFAULT INTERFACE
