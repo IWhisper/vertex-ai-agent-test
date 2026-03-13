@@ -74,7 +74,7 @@ GOOGLE_CLOUD_PROJECT=your-project-id
 GOOGLE_CLOUD_LOCATION=your-location   # e.g. europe-west1
 ```
 
-Also authenticate locally with:
+If you have gcloud installed, authenticate locally with:
 
 ```bash
 gcloud auth application-default login
@@ -186,7 +186,7 @@ remote = client.agent_engines.create(config={
 
 ---
 
-### 3. Parsing `stream_query` Output in Cloud Tests
+### 5. Parsing `stream_query` Output in Cloud Tests
 
 Each chunk from `stream_query` is a `dict` with the following structure:
 
@@ -224,6 +224,27 @@ python deploy_from_source.py
 ```bash
 python test_deployed.py --mode stream  # Shows routing chain + final output
 python test_deployed.py --mode sync    # Shows final output only
+```
+
+### 6. Deployment from GitHub (via Developer Connect)
+
+This method allows you to deploy code directly from a connected Git repository.
+
+**Prerequisites:**
+1. Enable **Developer Connect API**.
+2. Create a **Connection** to GitHub in the GCP Console.
+3. Link your repository (e.g., `IWhisper/vertex-ai-agent-test`).
+4. Copy the **Git Repository Link Resource Name**.
+
+**Setup:**
+Add your link to `.env`:
+```
+GIT_REPOSITORY_LINK=projects/YOUR_PROJECT/locations/YOUR_LOCATION/connections/YOUR_CONN/gitRepositoryLinks/YOUR_LINK
+```
+
+**Deploy:**
+```bash
+python deploy_from_github.py
 ```
 
 ---
